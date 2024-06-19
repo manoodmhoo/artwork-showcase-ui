@@ -9,10 +9,18 @@ const config: Config = {
   theme: {
     extend: {
       backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+       
       },
+      colors: {
+        "primary": "#1D7293",
+        "secondary": "#073141",
+        "tertiary": "#F6FDFF",
+        "aliceblue": "#E0EFF4",
+        "white": "#FFFFFF",
+      },
+      fontFamily: {
+        "body": ["IBM Plex Sans Thai", "sans-serif"],
+      }
     },
   },
   plugins: [],
