@@ -3,11 +3,31 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
+import { parseCookies } from "nookies"
+import { useEffect, useState } from "react";
 
 const Nav = () => {
     const router = useRouter();
+    const [loggedIn, setLoggedIn] = useState(false);
+
+    useEffect(() => {
+        const { userData } = parseCookies();
+        if(userData) {
+            setLoggedIn(true);
+        } else {
+            setLoggedIn(false);
+        }
+    }, [loggedIn]);
 
     const handleSignInButton = () => router.push('/auth');
+
+    const handleSignOutButton = () => {
+        setLoggedIn(false);
+        Cookies.remove("userData");
+        Cookies.remove("token");
+        router.push("/auth");
+    }
 
     return (
         <>
@@ -43,10 +63,15 @@ const Nav = () => {
                         </Link>
                     </li>
                 </ul>
-                
-                <button className="bg-primary text-white w-[135px] h-[35px] rounded-[8px]" onClick={() => handleSignInButton()}>
-                    Log in
-                </button>
+                { loggedIn ? (
+                    <button className="bg-primary text-white w-[135px] h-[35px] rounded-[8px]" onClick={() => handleSignOutButton()}>
+                        Log Out
+                    </button>
+                ) : (
+                    <button className="bg-primary text-white w-[135px] h-[35px] rounded-[8px]" onClick={() => handleSignInButton()}>
+                        Sign in
+                    </button>
+                )}
             </nav>
         </>
     )

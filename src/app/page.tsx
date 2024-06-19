@@ -1,78 +1,118 @@
+"use client";
+
 import Image from "next/image";
 import Nav from "./components/Layout/Nav";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import ArtworkCard from "./components/ArtworkCard";
 import ArtistCard from "./components/ArtistCard";
+import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import axios from "axios";
+import { config } from "process";
+import Artwork from "./components/Artwork";
 
 export default function Home() { 
+  const [artworks, setArtworks] = useState<any[]>([]);
   
-  const artworks = [
-    {
-      "id": 1,
-      "artwork_img": "https://picsum.photos/seed/picsum/300/300",
-      "artwork_name": "Artwork 1",
-      "artist_name": "John Doe",
-      "artist_img": "https://picsum.photos/seed/picsum/200/200",
-      "likes": 100
-    },
-    {
-      "id": 2,
-      "artwork_img": "https://picsum.photos/seed/picsum/300/300",
-      "artwork_name": "Artwork 1",
-      "artist_name": "John Doe",
-      "artist_img": "https://picsum.photos/seed/picsum/200/200",
-      "likes": 20
-    },
-    {
-      "id": 3,
-      "artwork_img": "https://picsum.photos/seed/picsum/300/300",
-      "artwork_name": "Artwork 1",
-      "artist_name": "John Doe",
-      "artist_img": "https://picsum.photos/seed/picsum/200/200",
-      "likes": 50
-    },
-    {
-      "id": 4,
-      "artwork_img": "https://picsum.photos/seed/picsum/300/300",
-      "artwork_name": "Artwork 1",
-      "artist_name": "John Doe",
-      "artist_img": "https://picsum.photos/seed/picsum/200/200",
-      "likes": 70
-    },
-    {
-      "id": 5,
-      "artwork_img": "https://picsum.photos/seed/picsum/300/300",
-      "artwork_name": "Artwork 1",
-      "artist_name": "John Doe",
-      "artist_img": "https://picsum.photos/seed/picsum/200/200",
-      "likes": 80
-    },
-    {
-      "id": 6,
-      "artwork_img": "https://picsum.photos/seed/picsum/300/300",
-      "artwork_name": "Artwork 1",
-      "artist_name": "John Doe",
-      "artist_img": "https://picsum.photos/seed/picsum/200/200",
-      "likes": 90
-    },
-    {
-      "id": 7,
-      "artwork_img": "https://picsum.photos/seed/picsum/300/300",
-      "artwork_name": "Artwork 1",
-      "artist_name": "John Doe",
-      "artist_img": "https://picsum.photos/seed/picsum/200/200",
-      "likes": 110
-    },
-    {
-      "id": 8,
-      "artwork_img": "https://picsum.photos/seed/picsum/300/300",
-      "artwork_name": "Artwork 1",
-      "artist_name": "John Doe",
-      "artist_img": "https://picsum.photos/seed/picsum/200/200",
-      "likes": 120
+
+  const configs = {
+    "headers": {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${Cookies.get("token")}`
     }
-  ];
+  }
+
+  const getAllArtworks = async () => {
+    try {
+      const resp = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/artwork`, configs);
+      return resp;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [artWorkResponse] = await Promise.all([
+          getAllArtworks()
+        ]);
+        setArtworks(artWorkResponse?.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchData();
+  }, []);
+  
+  // const artworks = [
+  //   {
+  //     "id": 1,
+  //     "artwork_img": "https://picsum.photos/seed/picsum/300/300",
+  //     "artwork_name": "Artwork 1",
+  //     "artist_name": "John Doe",
+  //     "artist_img": "https://picsum.photos/seed/picsum/200/200",
+  //     "likes": 100
+  //   },
+  //   {
+  //     "id": 2,
+  //     "artwork_img": "https://picsum.photos/seed/picsum/300/300",
+  //     "artwork_name": "Artwork 1",
+  //     "artist_name": "John Doe",
+  //     "artist_img": "https://picsum.photos/seed/picsum/200/200",
+  //     "likes": 20
+  //   },
+  //   {
+  //     "id": 3,
+  //     "artwork_img": "https://picsum.photos/seed/picsum/300/300",
+  //     "artwork_name": "Artwork 1",
+  //     "artist_name": "John Doe",
+  //     "artist_img": "https://picsum.photos/seed/picsum/200/200",
+  //     "likes": 50
+  //   },
+  //   {
+  //     "id": 4,
+  //     "artwork_img": "https://picsum.photos/seed/picsum/300/300",
+  //     "artwork_name": "Artwork 1",
+  //     "artist_name": "John Doe",
+  //     "artist_img": "https://picsum.photos/seed/picsum/200/200",
+  //     "likes": 70
+  //   },
+  //   {
+  //     "id": 5,
+  //     "artwork_img": "https://picsum.photos/seed/picsum/300/300",
+  //     "artwork_name": "Artwork 1",
+  //     "artist_name": "John Doe",
+  //     "artist_img": "https://picsum.photos/seed/picsum/200/200",
+  //     "likes": 80
+  //   },
+  //   {
+  //     "id": 6,
+  //     "artwork_img": "https://picsum.photos/seed/picsum/300/300",
+  //     "artwork_name": "Artwork 1",
+  //     "artist_name": "John Doe",
+  //     "artist_img": "https://picsum.photos/seed/picsum/200/200",
+  //     "likes": 90
+  //   },
+  //   {
+  //     "id": 7,
+  //     "artwork_img": "https://picsum.photos/seed/picsum/300/300",
+  //     "artwork_name": "Artwork 1",
+  //     "artist_name": "John Doe",
+  //     "artist_img": "https://picsum.photos/seed/picsum/200/200",
+  //     "likes": 110
+  //   },
+  //   {
+  //     "id": 8,
+  //     "artwork_img": "https://picsum.photos/seed/picsum/300/300",
+  //     "artwork_name": "Artwork 1",
+  //     "artist_name": "John Doe",
+  //     "artist_img": "https://picsum.photos/seed/picsum/200/200",
+  //     "likes": 120
+  //   }
+  // ];
 
   const artists = [
     {
@@ -97,6 +137,7 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
+        <Nav/>
         <section className="cover-section w-full h-[540px] bg-tertiary flex justify-center items-center mt-[78.5px]" id="cover-section">
             <div className="flex justify-center container mx-64">
                 <div className="w-1/2">
@@ -160,17 +201,9 @@ export default function Home() {
             <h1 className="uppercase text-primary font-extrabold text-[16.88px] tracking-[5px]">FEATURED ARTWORK SHOWCASE</h1>
             <p className="text-primary mt-8 text-[14px]">Where creativity knows no bounds and digital art takes center stage. At Stunning digital artworks created by DesignForge members.</p>
 
-            <div className="grid grid-cols-4 mt-8 gap-4">
-              {artworks.map((artwork) => (
-                <ArtworkCard key={artwork.id}
-                  artwork_img={artwork.artwork_img}
-                  artwork_name={artwork.artwork_name}
-                  artist_img={artwork.artist_img}
-                  artist_name={artwork.artist_name}
-                  likes={artwork.likes}
-                />
-              ))} 
-            </div>
+            {/* <div className="grid grid-cols-4 mt-8 gap-4"> */}
+              <Artwork artworks={artworks} />
+            {/* </div> */}
           </div>
         </section>
 

@@ -3,26 +3,24 @@
 import Image from "next/image";
 import { IoMdHeart } from "react-icons/io";
 
-interface ArtworkCardProps {
-    artwork_img: string;
-    artwork_name: string;
-    artist_img: string;
-    artist_name: string;
-    likes: number;
+type ArtworkCardProps = {
+    artworkList: any;
 }
 
-const ArtworkCard = ({ artwork_img, artwork_name, artist_img, artist_name, likes}: ArtworkCardProps) => {
+const ArtworkCard: React.FC<ArtworkCardProps> = ({ artworkList }) => {
+
+    console.log(artworkList);
 
     return (
         <div className="flex flex-col w-auto justify-center">
             <Image
                 className="rounded-tr-lg rounded-bl-lg aspect-square object-cover"
-                src={artwork_img}
-                alt={artwork_name}
+                src={artworkList.imgPath}
+                alt={artworkList._id}
                 width={268.59}
                 height={268.59}
             />
-            <div className="flex justify-between items-center py-1">
+            {/* <div className="flex justify-between items-center py-1">
                 <div className="flex gap-2 items-center">
                     <Image
                         className="rounded-full aspect-square object-cover"
@@ -37,7 +35,7 @@ const ArtworkCard = ({ artwork_img, artwork_name, artist_img, artist_name, likes
                     <IoMdHeart className="text-primary" size={20} />
                     <p className="text-primary text-[11.25px]">{likes}</p>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }
