@@ -12,7 +12,7 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({ artworkList }) => {
     console.log(artworkList);
 
     return (
-        <div className="flex flex-col w-auto justify-center">
+        <div className="flex flex-col items-center md:items-start w-auto justify-center">
             <Image
                 className="rounded-tr-lg rounded-bl-lg aspect-square object-cover"
                 src={artworkList.imgPath}

@@ -26,6 +26,7 @@ export default function Home() {
   const getAllArtworks = async () => {
     try {
       const resp = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/artwork`, configs);
+      console.log(resp);
       return resp;
     } catch (error) {
       console.log(error);
@@ -138,11 +139,11 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
         <Nav/>
-        <section className="cover-section w-full h-[540px] bg-tertiary flex justify-center items-center mt-[78.5px]" id="cover-section">
-            <div className="flex justify-center container mx-64">
-                <div className="w-1/2">
+        <section className="cover-section w-full h-[450px] xl:h-[540px] bg-tertiary flex justify-center items-center mt-[78.5px]" id="cover-section">
+            <div className="flex justify-center container mx-8 lg:mx-32 xl:mx-64">
+                <div className="w-full md:w-1/2">
                     <div className="flex">
-                      <h1 className="text-[45px] font-semibold">Unveiling the mastery behind every pixel’s life. Tour our digital art paradise!</h1>
+                      <h1 className="text-[28px] lg:text-[32px] xl:text-[45px] font-semibold">Unveiling the mastery behind every pixel’s life. Tour our digital art paradise!</h1>
                     </div>
                     <div className="flex mt-[8px]">
                         <Link href={"#artworks-section"}
@@ -155,7 +156,7 @@ export default function Home() {
                         </Link>
                     </div>
                 </div>
-                <div className="flex justify-center items-center w-1/2">
+                <div className="hidden md:flex justify-center items-center w-1/2">
                   <Image
                       src="/img/cover.png"
                       alt="cover"
@@ -167,7 +168,7 @@ export default function Home() {
         </section>
 
         <section className="count-section w-full h-[284px] bg-tertiary flex items-center justify-center" id="count-section">
-            <div className="container mx-64 text-center">
+            <div className="container mx-4 lg:mx-32 xl:mx-64 text-center">
               <h1 className="uppercase text-primary font-extrabold text-[16.88px] tracking-[5px]">about designforge</h1>
               <p className="text-primary mt-8 text-[14px]">Where creativity knows no bounds and digital art takes center stage. At DesignForge, we believe in the power of imagination to transform pixels into masterpieces, and we're passionate about fostering a vibrant community of digital artists, designers, and enthusiasts from around the globe.</p>
 
@@ -197,7 +198,7 @@ export default function Home() {
         </section>
 
         <section className="artworks-section w-full h-fit bg-white flex justify-center py-16" id="artworks-section">
-          <div className="container mx-64 text-center">
+          <div className="container mx-8 lg:mx-32 xl:mx-64 text-center">
             <h1 className="uppercase text-primary font-extrabold text-[16.88px] tracking-[5px]">FEATURED ARTWORK SHOWCASE</h1>
             <p className="text-primary mt-8 text-[14px]">Where creativity knows no bounds and digital art takes center stage. At Stunning digital artworks created by DesignForge members.</p>
 
@@ -207,8 +208,8 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="artists-section w-full h-fit bg-tertiary flex flex-col justify-center items-center" id="artists-section">
-          <div className="container mx-64 text-center">
+        <section className="artists-section w-full h-fit bg-tertiary flex flex-col justify-center items-center px-[16px]" id="artists-section">
+          <div className="container mx-8 lg:mx-32 xl:mx-64 text-center">
             <h1 className="uppercase text-primary font-extrabold text-[16.88px] tracking-[5px]">Artists</h1>
             <p className="text-primary mt-8 text-[14px]">At DesignForge, we take pride in the success and satisfaction of our members. But don't just take our word for it—hear what our community has to say about their experience with DesignForge.</p>
           </div>
@@ -224,10 +225,10 @@ export default function Home() {
         </section>
 
         <section className="artists-section w-full h-[334px] bg-tertiary flex justify-center items-center" id="awards-section">
-          <div className="container mx-64 text-center">
+          <div className="container mx-8 lg:mx-32 xl:mx-64 text-center">
             <h1 className="uppercase text-primary font-extrabold text-[16.88px] tracking-[5px]">Awards</h1>
             <p className="text-primary mt-8 text-[14px]">At DesignForge, we believe in celebrating excellence and recognizing the outstanding achievements of our community members.</p>
-            <div className="flex justify-center items-center mt-8 gap-16">
+            <div className="flex justify-center items-center mt-8 gap-4 sm:gap-8 xl:gap-16">
                 <Image
                   src="/img/awards/awards-1.png"
                   alt="awards"
@@ -256,13 +257,12 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="partner-section w-full  h-[291px] bg-tertiary flex flex-col justify-center items-center" id="partner-section">
-          <div className="container mx-64 text-center">
+        <section className="partner-section w-full h-[291px] bg-tertiary flex flex-col justify-center items-center px-[16px]" id="partner-section">
+          <div className="container mx-8 lg:mx-32 xl:mx-64 text-center">
             <h1 className="uppercase text-primary font-extrabold text-[16.88px] tracking-[5px]">Trusted By</h1>
             <p className="text-primary mt-8 text-[14px]">DesignForge is trusted by leading organizations, industry professionals, and creative enthusiasts around the world. Our commitment to excellence, innovation, and community has earned us the trust and recognition of some of the most respected names in the digital art and design industry.</p>
-            
           </div>
-          <div className="flex justify-between items-center mt-8 px-8 gap-16 w-full">
+          <div className="flex justify-between items-center mt-8 px-8 gap-8 xl:gap-16 overflow-hidden">
               <Image
                 src="/img/partners/logo_1.png"
                 alt="Partner"
