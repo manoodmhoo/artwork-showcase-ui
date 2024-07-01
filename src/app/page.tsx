@@ -11,9 +11,12 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import { config } from "process";
 import Artwork from "./components/Artwork";
+import Artist from "./components/Artist";
 
 export default function Home() { 
   const [artworks, setArtworks] = useState<any[]>([]);
+  const [artists, setArtists] = useState<any[]>([]);
+  const [users, setUsers] = useState<any[]>([]);
   
 
   const configs = {
@@ -26,7 +29,25 @@ export default function Home() {
   const getAllArtworks = async () => {
     try {
       const resp = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/artwork`, configs);
-      console.log(resp);
+      return resp;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const getAllArtists = async () => {
+    try {
+      const resp = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/artist`, configs);
+      return resp;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const getAllUsers = async () => {
+    try {
+      const resp = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/auth`, configs);
+      console.log(resp.data);
       return resp;
     } catch (error) {
       console.log(error);
@@ -36,10 +57,14 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [artWorkResponse] = await Promise.all([
-          getAllArtworks()
+        const [artWorkResponse, artistResponse, userResponse] = await Promise.all([
+          getAllArtworks(),
+          getAllArtists(),
+          getAllUsers()
         ]);
         setArtworks(artWorkResponse?.data);
+        setArtists(artistResponse?.data);
+        setUsers(userResponse?.data);
       } catch (error) {
         console.log(error);
       }
@@ -47,94 +72,6 @@ export default function Home() {
 
     fetchData();
   }, []);
-  
-  // const artworks = [
-  //   {
-  //     "id": 1,
-  //     "artwork_img": "https://picsum.photos/seed/picsum/300/300",
-  //     "artwork_name": "Artwork 1",
-  //     "artist_name": "John Doe",
-  //     "artist_img": "https://picsum.photos/seed/picsum/200/200",
-  //     "likes": 100
-  //   },
-  //   {
-  //     "id": 2,
-  //     "artwork_img": "https://picsum.photos/seed/picsum/300/300",
-  //     "artwork_name": "Artwork 1",
-  //     "artist_name": "John Doe",
-  //     "artist_img": "https://picsum.photos/seed/picsum/200/200",
-  //     "likes": 20
-  //   },
-  //   {
-  //     "id": 3,
-  //     "artwork_img": "https://picsum.photos/seed/picsum/300/300",
-  //     "artwork_name": "Artwork 1",
-  //     "artist_name": "John Doe",
-  //     "artist_img": "https://picsum.photos/seed/picsum/200/200",
-  //     "likes": 50
-  //   },
-  //   {
-  //     "id": 4,
-  //     "artwork_img": "https://picsum.photos/seed/picsum/300/300",
-  //     "artwork_name": "Artwork 1",
-  //     "artist_name": "John Doe",
-  //     "artist_img": "https://picsum.photos/seed/picsum/200/200",
-  //     "likes": 70
-  //   },
-  //   {
-  //     "id": 5,
-  //     "artwork_img": "https://picsum.photos/seed/picsum/300/300",
-  //     "artwork_name": "Artwork 1",
-  //     "artist_name": "John Doe",
-  //     "artist_img": "https://picsum.photos/seed/picsum/200/200",
-  //     "likes": 80
-  //   },
-  //   {
-  //     "id": 6,
-  //     "artwork_img": "https://picsum.photos/seed/picsum/300/300",
-  //     "artwork_name": "Artwork 1",
-  //     "artist_name": "John Doe",
-  //     "artist_img": "https://picsum.photos/seed/picsum/200/200",
-  //     "likes": 90
-  //   },
-  //   {
-  //     "id": 7,
-  //     "artwork_img": "https://picsum.photos/seed/picsum/300/300",
-  //     "artwork_name": "Artwork 1",
-  //     "artist_name": "John Doe",
-  //     "artist_img": "https://picsum.photos/seed/picsum/200/200",
-  //     "likes": 110
-  //   },
-  //   {
-  //     "id": 8,
-  //     "artwork_img": "https://picsum.photos/seed/picsum/300/300",
-  //     "artwork_name": "Artwork 1",
-  //     "artist_name": "John Doe",
-  //     "artist_img": "https://picsum.photos/seed/picsum/200/200",
-  //     "likes": 120
-  //   }
-  // ];
-
-  const artists = [
-    {
-      "id": 1,
-      "artist_img": "https://picsum.photos/seed/picsum/230/300",
-      "artist_name": "John Doe",
-      "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut purus eget sapien."
-    },
-    {
-      "id": 2,
-      "artist_img": "https://picsum.photos/seed/picsum/230/300",
-      "artist_name": "John Doe",
-      "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut purus eget sapien."
-    },
-    {
-      "id": 3,
-      "artist_img": "https://picsum.photos/seed/picsum/230/300",
-      "artist_name": "John Doe",
-      "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut purus eget sapien."
-    },
-  ];
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
@@ -197,15 +134,14 @@ export default function Home() {
             </div>
         </section>
 
-        <section className="artworks-section w-full h-fit bg-white flex justify-center py-16" id="artworks-section">
+        <section className="artworks-section w-full h-fit bg-white flex flex-col justify-center items-center py-16" id="artworks-section">
           <div className="container mx-8 lg:mx-32 xl:mx-64 text-center">
             <h1 className="uppercase text-primary font-extrabold text-[16.88px] tracking-[5px]">FEATURED ARTWORK SHOWCASE</h1>
             <p className="text-primary mt-8 text-[14px]">Where creativity knows no bounds and digital art takes center stage. At Stunning digital artworks created by DesignForge members.</p>
-
-            {/* <div className="grid grid-cols-4 mt-8 gap-4"> */}
-              <Artwork artworks={artworks} />
-            {/* </div> */}
           </div>
+          <div className="flex justify-center overflow-y-scroll h-fit">
+              <Artwork artworks={artworks} artists={artists} users={users} />
+            </div>
         </section>
 
         <section className="artists-section w-full h-fit bg-tertiary flex flex-col justify-center items-center px-[16px]" id="artists-section">
@@ -213,14 +149,8 @@ export default function Home() {
             <h1 className="uppercase text-primary font-extrabold text-[16.88px] tracking-[5px]">Artists</h1>
             <p className="text-primary mt-8 text-[14px]">At DesignForge, we take pride in the success and satisfaction of our members. But don't just take our word for it—hear what our community has to say about their experience with DesignForge.</p>
           </div>
-          <div className="flex mt-8 w-full px-8 overflow-hidden">
-            {artists.map((artist) => (
-              <ArtistCard key={artist.id}
-                artist_img={artist.artist_img}
-                artist_name={artist.artist_name}
-                bio={artist.bio}
-              />
-            ))}
+          <div className="overflow-x-scroll p-4 w-full h-fit">
+            <Artist artists={artists} users={users} />
           </div>
         </section>
 

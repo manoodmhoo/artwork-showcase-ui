@@ -39,7 +39,7 @@ const Nav = () => {
     return (
         <>
             <nav className="fixed flex justify-between items-center bg-tertiary w-full h-[78.5px] px-[24px]">
-                <Link href="/" className="bg-blue-200">
+                <Link href="/">
                     <Image 
                         src="/img/logo.png"
                         alt="logo"

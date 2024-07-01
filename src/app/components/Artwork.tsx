@@ -3,19 +3,23 @@ import ArtworkCard from "./ArtworkCard";
 
 type ArtworkProps = {
     artworks: any[];
+    artists: any[];
+    users: any[];
 }
 
-const Artwork: React.FC<ArtworkProps> = ({ artworks }) => {
+const Artwork: React.FC<ArtworkProps> = ({ artworks, artists, users }) => {
     
     return (
         <>
            { artworks ? (
             <>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-8 md:gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-8 gap-2">
                     { artworks.map((artwork) => ( 
                         <ArtworkCard
                         key={artwork._id} 
                         artworkList={artwork}
+                        artists={artists}
+                        users={users}
                         />))   
                     }
                 </div>
