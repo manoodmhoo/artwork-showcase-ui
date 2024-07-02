@@ -79,6 +79,9 @@ const SignIn = () => {
                             </div>
                         </div>
                     </form>
+                    <div className="mt-4">
+                        <p><a href="/auth/register" className="text-gray-500">Create an account</a></p>
+                    </div>
                 </div>
             </div>
         </main>

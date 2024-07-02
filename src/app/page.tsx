@@ -12,6 +12,7 @@ import axios from "axios";
 import { config } from "process";
 import Artwork from "./components/Artwork";
 import Artist from "./components/Artist";
+import Footer from "./components/Layout/Footer";
 
 export default function Home() { 
   const [artworks, setArtworks] = useState<any[]>([]);
@@ -237,6 +238,7 @@ export default function Home() {
               />
             </div>
         </section>  
+        <Footer/>
     </main>
   );
 }
