@@ -87,7 +87,7 @@ const Nav = () => {
                 </div>
                 
                 { menuClick ? (
-                    <div className="xl:hidden flex flex-col bg-red-200 w-[300px] absolute top-0 mt-[78.5px] right-0">
+                    <div className="xl:hidden flex flex-col bg-tertiary w-[300px] absolute top-0 mt-[78.5px] right-0 shadow-md">
                         <ul className="flex flex-col items-start justify-between  text-secondary">
                             <li className="px-4 py-4">
                                 <Link href="#count-section">
@@ -112,7 +112,7 @@ const Nav = () => {
                         </ul>
 
                         { loggedIn ? (
-                            <button className="text-secondar" onClick={() => handleSignOutButton()}>
+                            <button className="text-secondary" onClick={() => handleSignOutButton()}>
                                 Log Out
                             </button>
                         ) : (
