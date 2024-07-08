@@ -37,7 +37,7 @@ const Register = () => {
                 password,
             }
             
-            const { data }: any = await axios.post("http://localhost:3333/auth", submitData, configs);
+            const { data }: any = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth`, submitData, configs);
 
             if(data.statusCode == 200) {
                 alert("Registration successful");

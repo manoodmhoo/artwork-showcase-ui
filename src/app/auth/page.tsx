@@ -8,6 +8,8 @@ import { useState } from "react";
 import Cookies from "js-cookie"
 import Nav from "../components/Layout/Nav";
 
+
+
 const SignIn = () => {
     const router = useRouter();
     const [email, setEmail] = useState("");
@@ -23,7 +25,7 @@ const SignIn = () => {
         }
 
         try {
-            const { data }: any = await axios.post("http://localhost:3333/auth/login", {
+            const { data }: any = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
                 email,
                 password
             }, configs);
